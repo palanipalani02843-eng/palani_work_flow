@@ -1,0 +1,6 @@
+# Netlify Redirects configuration
+# When your backend is deployed (e.g., on Render, Railway, or VPS), uncomment the line below and replace with your backend URL:
+# /api/*  https://YOUR-BACKEND-URL.onrender.com/api/:splat  200!
+
+# Single Page Application (SPA) fallback rule
+/*  /index.html  200

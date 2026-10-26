@@ -1,0 +1,1864 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Palani Interns Work flow | Guide: Palani Pandi C - Tarcin Robotics LLP</title>
+  
+  <!-- Google Fonts: Inter & Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Chart.js for Performance Analysis -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <!-- Confetti for task celebrations -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            brand: {
+              50: '#ecfeff',
+              100: '#cffafe',
+              200: '#a5f3fc',
+              300: '#67e8f9',
+              400: '#22d3ee',
+              500: '#06b6d4',
+              600: '#0891b2',
+              700: '#0e7490',
+              800: '#155e75',
+              900: '#164e63',
+              950: '#083344',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 min-h-screen font-sans antialiased transition-colors duration-200 flex flex-col">
+
+  <!-- Toast Container -->
+  <div id="toast-container" class="fixed top-5 right-5 z-50 flex flex-col gap-3 pointer-events-none"></div>
+
+  <!-- ================= 1. AUTH / LOGIN SCREEN ================= -->
+  <div id="view-login" class="flex-1 flex items-center justify-center p-4 sm:p-6 min-h-screen bg-gradient-to-br from-slate-900 via-slate-950 to-cyan-950 text-slate-100">
+    <div class="max-w-md w-full bg-slate-900/95 backdrop-blur-xl rounded-3xl p-6 sm:p-8 border border-cyan-500/30 shadow-2xl shadow-cyan-950/80 relative overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+      
+      <!-- Circuit glow decoration -->
+      <div class="absolute -top-12 -right-12 w-40 h-40 bg-cyan-500/20 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -bottom-12 -left-12 w-40 h-40 bg-emerald-500/20 rounded-full blur-3xl pointer-events-none"></div>
+
+      <!-- Header / Logo -->
+      <div class="text-center space-y-2 mb-6">
+        <div class="inline-flex w-14 h-14 rounded-2xl bg-gradient-to-tr from-cyan-600 via-teal-500 to-emerald-400 items-center justify-center text-white shadow-xl shadow-cyan-500/30 ring-4 ring-cyan-500/20">
+          <i data-lucide="cpu" class="w-7 h-7"></i>
+        </div>
+        <div class="flex items-center justify-center gap-1.5 text-[11px] font-bold text-cyan-400 uppercase tracking-widest">
+          <i data-lucide="zap" class="w-3.5 h-3.5"></i> Tarcin Robotics LLP
+        </div>
+        <h1 class="text-2xl font-black tracking-tight bg-gradient-to-r from-white via-cyan-200 to-emerald-300 bg-clip-text text-transparent">
+          Palani Interns Work flow
+        </h1>
+        <p class="text-xs text-slate-400 font-medium">Guide: <b>Palani Pandi C</b> &bull; Embedded & IoT Engineer</p>
+      </div>
+
+      <!-- Role Selector Tabs: Guide (Left) vs Tarcin Interns (Right) -->
+      <div class="flex items-center p-1 bg-slate-800/80 rounded-xl mb-6 border border-slate-700/60">
+        <button id="tab-login-supervisor" class="flex-1 py-2 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-2 bg-cyan-600 text-white shadow-sm">
+          <i data-lucide="shield-check" class="w-4 h-4"></i>
+          <span>Guide (Palani)</span>
+        </button>
+        <button id="tab-login-intern" class="flex-1 py-2 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-2 text-slate-400 hover:text-white">
+          <i data-lucide="users" class="w-4 h-4"></i>
+          <span>Tarcin Interns</span>
+        </button>
+      </div>
+
+      <!-- Supervisor Login Form (Guide Left - Visible by Default) -->
+      <form id="form-login-supervisor" class="space-y-4" autocomplete="off">
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">Guide Username</label>
+          <div class="relative">
+            <i data-lucide="user" class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2"></i>
+            <input type="text" id="sup-username" required placeholder="Enter guide username" autocomplete="username" class="w-full text-xs pl-9 pr-3 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 font-mono" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">Guide Password</label>
+          <div class="relative">
+            <i data-lucide="lock" class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2"></i>
+            <input type="password" id="sup-password" required placeholder="Enter guide password" autocomplete="current-password" class="w-full text-xs pl-9 pr-3 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 font-mono" />
+          </div>
+        </div>
+
+        <button type="submit" class="w-full py-2.5 rounded-xl text-xs sm:text-sm font-bold text-white bg-gradient-to-r from-cyan-600 to-teal-600 hover:from-cyan-500 hover:to-teal-500 shadow-lg shadow-cyan-500/25 active:scale-98 transition-all flex items-center justify-center gap-2">
+          <i data-lucide="log-in" class="w-4 h-4"></i>
+          <span>Login as Guide Palani</span>
+        </button>
+      </form>
+
+      <!-- Tarcin Interns Login Form (Tarcin Intern Right - Hidden until tab clicked) -->
+      <form id="form-login-intern" class="space-y-4 hidden" autocomplete="off">
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">Intern Login ID / Username</label>
+          <div class="relative">
+            <i data-lucide="user-check" class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2"></i>
+            <input type="text" id="intern-login-id" required placeholder="Enter username given by Palani" autocomplete="username" class="w-full text-xs pl-9 pr-3 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 font-mono" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">Intern Password</label>
+          <div class="relative">
+            <i data-lucide="key" class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2"></i>
+            <input type="password" id="intern-login-pwd" required placeholder="Enter password given by Palani" autocomplete="current-password" class="w-full text-xs pl-9 pr-3 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 font-mono" />
+          </div>
+        </div>
+
+        <button type="submit" class="w-full py-2.5 rounded-xl text-xs sm:text-sm font-bold text-white bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-500 hover:to-emerald-500 shadow-lg shadow-teal-500/25 active:scale-98 transition-all flex items-center justify-center gap-2">
+          <i data-lucide="log-in" class="w-4 h-4"></i>
+          <span>Login to Tarcin Interns</span>
+        </button>
+
+        <p class="text-[11px] text-slate-400 text-center">Use the credentials provided by your Guide <b>Palani Pandi C</b> to submit your .ZIP files.</p>
+      </form>
+
+      <!-- Connection Status & Cloud URL Config -->
+      <div class="mt-5 pt-3 border-t border-slate-800 flex items-center justify-between text-[11px] text-slate-400">
+        <div class="flex items-center gap-1.5" id="login-server-status">
+          <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+          <span id="login-server-label">Server Ready</span>
+        </div>
+        <button type="button" id="btn-cloud-server-config" class="text-cyan-400 hover:text-cyan-300 font-semibold flex items-center gap-1 hover:underline">
+          <i data-lucide="globe" class="w-3.5 h-3.5"></i> Cloud URL
+        </button>
+      </div>
+
+      <div class="mt-3 text-center text-[11px] text-slate-500">
+        <b>Palani Pandi C</b> &bull; Embedded & IoT Engineer working at Tarcin Robotics LLP
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================= 2. SUPERVISOR MAIN DASHBOARD ================= -->
+  <div id="view-supervisor" class="hidden flex-1 flex flex-col min-h-screen">
+    
+    <!-- Notice Banner when Intern is viewing Guide Dashboard -->
+    <div id="intern-guide-preview-banner" class="hidden bg-gradient-to-r from-emerald-950 via-teal-950 to-slate-950 border-b border-emerald-500/40 text-white px-4 py-2 text-xs sticky top-0 z-50 shadow-md">
+      <div class="max-w-7xl mx-auto flex items-center justify-between gap-3 flex-wrap">
+        <div class="flex items-center gap-2">
+          <span class="w-2 rounded-full bg-emerald-400"></span>
+          <span class="text-emerald-200">
+            Viewing <b>Guide: Palani Pandi C's Workflow Dashboard</b> as Intern: <strong id="preview-intern-name" class="text-white font-bold underline">palani</strong> (View-Only Mode)
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Top Header -->
+    <header class="sticky top-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 transition-colors">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+          
+          <!-- Logo & Brand with Palani Pandi C & Guide Badge -->
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-600 via-teal-600 to-emerald-500 flex items-center justify-center text-white shadow-lg shadow-cyan-500/25 ring-2 ring-cyan-500/20">
+              <i data-lucide="cpu" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <h1 class="text-base sm:text-lg font-extrabold tracking-tight bg-gradient-to-r from-slate-900 via-cyan-700 to-teal-600 dark:from-white dark:via-cyan-300 dark:to-emerald-400 bg-clip-text text-transparent">
+                  Palani Interns Work flow
+                </h1>
+                <!-- "Guide" Badge as requested -->
+                <span class="px-2.5 py-0.5 text-[10px] font-bold rounded-full bg-cyan-100 text-cyan-800 dark:bg-cyan-950/80 dark:text-cyan-300 border border-cyan-200 dark:border-cyan-800 flex items-center gap-1">
+                  <i data-lucide="shield" class="w-3 h-3"></i> Guide
+                </span>
+              </div>
+              <p class="text-[11px] text-slate-500 dark:text-slate-400 font-medium">
+                <strong id="header-sup-name" class="text-slate-900 dark:text-white font-bold">Palani Pandi C</strong> &bull; Embedded & IoT Engineer working at Tarcin Robotics LLP
+              </p>
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="flex items-center gap-2 sm:gap-3">
+            <!-- Return to Intern Portal Button (Shown when intern is viewing guide dashboard) -->
+            <button 
+              id="btn-return-intern-portal" 
+              onclick="ui.returnToInternPortal()" 
+              title="Return to your Intern Portal" 
+              class="hidden flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-lg text-white bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 shadow-md shadow-emerald-500/20 active:scale-95 transition-all">
+              <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+              <span>Back to Intern Portal</span>
+            </button>
+            <!-- Global Search -->
+            <div class="relative hidden lg:block w-52">
+              <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2"></i>
+              <input 
+                type="text" 
+                id="global-search" 
+                placeholder="Search intern or task..." 
+                class="w-full pl-9 pr-3 py-1.5 text-xs rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 font-mono"
+              />
+            </div>
+
+            <!-- Add Intern Button -->
+            <button 
+              id="btn-open-add-intern" 
+              class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg text-white bg-gradient-to-r from-cyan-600 to-teal-600 hover:from-cyan-500 hover:to-teal-500 shadow-md shadow-cyan-500/20 active:scale-95 transition-all">
+              <i data-lucide="user-plus" class="w-3.5 h-3.5"></i>
+              <span>Add Intern</span>
+            </button>
+
+            <!-- Assign Work Button (Removed word 'Lab') -->
+            <button 
+              id="btn-open-add-task" 
+              class="hidden sm:flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg text-cyan-800 dark:text-cyan-300 bg-cyan-50 hover:bg-cyan-100 dark:bg-cyan-950/60 dark:hover:bg-cyan-900/40 border border-cyan-200 dark:border-cyan-800 active:scale-95 transition-all">
+              <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i>
+              <span>Assign Work</span>
+            </button>
+
+            <!-- Guide Settings Button -->
+            <button 
+              id="btn-sup-settings" 
+              title="Edit My Guide Profile & Credentials"
+              class="p-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700 transition-colors">
+              <i data-lucide="settings" class="w-4 h-4"></i>
+            </button>
+
+            <!-- Export / Backup Dropdown Trigger -->
+            <div class="relative">
+              <button 
+                id="btn-export-menu" 
+                title="Export / Import Data"
+                class="p-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700 transition-colors">
+                <i data-lucide="download" class="w-4 h-4"></i>
+              </button>
+              <div id="export-dropdown" class="hidden absolute right-0 mt-2 w-52 bg-white dark:bg-slate-800 rounded-xl shadow-xl border border-slate-200 dark:border-slate-700 py-1.5 z-50 text-xs">
+                <button id="btn-export-csv" class="w-full px-3 py-2 text-left flex items-center gap-2 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200">
+                  <i data-lucide="file-spreadsheet" class="w-4 h-4 text-emerald-500"></i> Export Interns CSV
+                </button>
+                <button id="btn-export-json" class="w-full px-3 py-2 text-left flex items-center gap-2 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200">
+                  <i data-lucide="code" class="w-4 h-4 text-cyan-500"></i> Export JSON Backup
+                </button>
+                <label class="w-full px-3 py-2 text-left flex items-center gap-2 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 cursor-pointer">
+                  <i data-lucide="upload" class="w-4 h-4 text-amber-500"></i> Import JSON Data
+                  <input type="file" id="import-json-input" accept=".json" class="hidden" />
+                </label>
+                <div class="border-t border-slate-200 dark:border-slate-700 my-1"></div>
+                <button id="btn-clear-all-data" class="w-full px-3 py-2 text-left flex items-center gap-2 text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/30">
+                  <i data-lucide="trash-2" class="w-4 h-4"></i> Clear All & Start Fresh
+                </button>
+              </div>
+            </div>
+
+            <!-- Theme Toggle -->
+            <button 
+              id="theme-toggle" 
+              title="Toggle theme" 
+              class="p-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700 transition-colors">
+              <i data-lucide="moon" id="theme-icon" class="w-4 h-4"></i>
+            </button>
+
+            <!-- Logout Button -->
+            <button 
+              id="btn-logout" 
+              title="Logout" 
+              class="p-2 rounded-lg text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 border border-rose-200 dark:border-rose-900/60 transition-colors">
+              <i data-lucide="log-out" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+
+      <!-- KPI Overview Cards (Replaced 'Needs Help' with 'Bugs', separate task & assessment) -->
+      <section class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+        <!-- 1. Total Interns -->
+        <div class="stat-card bg-white dark:bg-slate-900 rounded-xl p-3.5 border border-slate-200 dark:border-slate-800 shadow-sm relative overflow-hidden">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Total Interns</span>
+            <div class="w-7 h-7 rounded-lg bg-cyan-50 dark:bg-cyan-950/50 text-cyan-600 dark:text-cyan-400 flex items-center justify-center">
+              <i data-lucide="users" class="w-3.5 h-3.5"></i>
+            </div>
+          </div>
+          <div class="mt-2 flex items-baseline gap-1.5">
+            <span id="stat-total-interns" class="text-xl font-extrabold text-slate-900 dark:text-white">0</span>
+            <span class="text-[11px] text-slate-400">/ 20</span>
+          </div>
+          <div class="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-1 mt-2 overflow-hidden">
+            <div id="stat-capacity-bar" class="bg-cyan-500 h-1 rounded-full transition-all duration-500" style="width: 0%"></div>
+          </div>
+        </div>
+
+        <!-- 2. Active Today (Click to view active today below) -->
+        <div 
+          onclick="ui.switchTab('active-today-view')" 
+          title="Click to view interns who logged in today"
+          class="stat-card bg-white dark:bg-slate-900 rounded-xl p-3.5 border border-slate-200 dark:border-slate-800 shadow-sm relative overflow-hidden cursor-pointer hover:border-emerald-500 hover:shadow-md transition-all group">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider flex items-center gap-1">
+              <i data-lucide="user-check" class="w-3.5 h-3.5"></i> Active Today
+            </span>
+            <div class="w-7 h-7 rounded-lg bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+              <i data-lucide="users" class="w-3.5 h-3.5"></i>
+            </div>
+          </div>
+          <div class="mt-2 flex items-baseline gap-1.5">
+            <span id="stat-active-interns" class="text-xl font-extrabold text-emerald-600 dark:text-emerald-400">0</span>
+            <span class="text-[10px] text-emerald-600 font-semibold flex items-center gap-1">
+              Logged In
+            </span>
+          </div>
+          <p class="text-[10px] text-emerald-600/80 font-medium mt-2 flex items-center gap-1">
+            <span>Click to view active</span>
+            <i data-lucide="chevron-right" class="w-3 h-3 group-hover:translate-x-0.5 transition-transform"></i>
+          </p>
+        </div>
+
+        <!-- 3. TASKS COMPLETED (Click to view completed tasks below) -->
+        <div 
+          onclick="ui.switchTab('completed-tasks-view')" 
+          title="Click to view completed tasks"
+          class="stat-card bg-white dark:bg-slate-900 rounded-xl p-3.5 border border-slate-200 dark:border-slate-800 shadow-sm relative overflow-hidden cursor-pointer hover:border-cyan-500 hover:shadow-md transition-all group">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] font-bold text-cyan-700 dark:text-cyan-400 uppercase tracking-wider flex items-center gap-1">
+              <i data-lucide="check-circle" class="w-3.5 h-3.5"></i> Task Completed
+            </span>
+            <div class="w-7 h-7 rounded-lg bg-cyan-50 dark:bg-cyan-950/50 text-cyan-600 dark:text-cyan-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+              <i data-lucide="list-checks" class="w-3.5 h-3.5"></i>
+            </div>
+          </div>
+          <div class="mt-2 flex items-baseline gap-1.5">
+            <span id="stat-tasks-completed" class="text-xl font-extrabold text-cyan-700 dark:text-cyan-400">0</span>
+            <span class="text-[10px] text-slate-400">tasks done</span>
+          </div>
+          <div class="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-1 mt-2 overflow-hidden">
+            <div id="stat-tasks-bar" class="bg-cyan-500 h-1 rounded-full transition-all duration-500" style="width: 0%"></div>
+          </div>
+          <p class="text-[10px] text-cyan-600/80 font-medium mt-2 flex items-center gap-1">
+            <span>Click to view completed</span>
+            <i data-lucide="chevron-right" class="w-3 h-3 group-hover:translate-x-0.5 transition-transform"></i>
+          </p>
+        </div>
+
+        <!-- 4. ASSESSMENTS COMPLETED (Click to view assessment ZIP files) -->
+        <div 
+          onclick="ui.switchTab('assessment-submissions-view')" 
+          title="Click to view assessment ZIP files submitted by interns"
+          class="stat-card bg-white dark:bg-slate-900 rounded-xl p-3.5 border border-emerald-200/60 dark:border-emerald-800/60 shadow-sm relative overflow-hidden bg-gradient-to-b from-white to-emerald-50/20 dark:from-slate-900 dark:to-emerald-950/20 cursor-pointer hover:border-emerald-500 hover:shadow-md transition-all group">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] font-bold text-emerald-700 dark:text-emerald-400 uppercase tracking-wider flex items-center gap-1">
+              <i data-lucide="award" class="w-3 h-3 text-emerald-500"></i> Assessment Done
+            </span>
+            <div class="w-7 h-7 rounded-lg bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+              <i data-lucide="badge-check" class="w-3.5 h-3.5"></i>
+            </div>
+          </div>
+          <div class="mt-2 flex items-baseline gap-1.5">
+            <span id="stat-assessments-completed" class="text-xl font-extrabold text-emerald-700 dark:text-emerald-400">0</span>
+            <span class="text-[10px] text-emerald-600 font-semibold">Evaluated</span>
+          </div>
+          <div class="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-1 mt-2 overflow-hidden">
+            <div id="stat-assessment-bar" class="bg-emerald-500 h-1 rounded-full transition-all duration-500" style="width: 0%"></div>
+          </div>
+          <p class="text-[10px] text-emerald-600/80 font-medium mt-2 flex items-center gap-1">
+            <span>Click to view assessment ZIPs</span>
+            <i data-lucide="chevron-right" class="w-3 h-3 group-hover:translate-x-0.5 transition-transform"></i>
+          </p>
+        </div>
+
+        <!-- 5. ZIP Submissions (Deliverables) -->
+        <div class="stat-card bg-white dark:bg-slate-900 rounded-xl p-3.5 border border-amber-200 dark:border-amber-800/60 shadow-sm relative overflow-hidden cursor-pointer hover:border-amber-400 transition-all" onclick="ui.switchTab('submissions-view')" title="View and Download ZIP Submissions">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] font-bold text-amber-600 dark:text-amber-400 uppercase tracking-wider flex items-center gap-1">
+              <i data-lucide="file-archive" class="w-3 h-3"></i> ZIP Files
+            </span>
+            <div class="w-7 h-7 rounded-lg bg-amber-50 dark:bg-amber-950/50 text-amber-600 dark:text-amber-400 flex items-center justify-center">
+              <i data-lucide="folder-down" class="w-3.5 h-3.5"></i>
+            </div>
+          </div>
+          <div class="mt-2 flex items-baseline gap-1.5">
+            <span id="stat-zip-submissions" class="text-xl font-extrabold text-amber-600 dark:text-amber-400">0</span>
+            <span class="text-[10px] text-amber-600 font-medium">Submissions</span>
+          </div>
+          <p class="text-[10px] text-amber-600/80 mt-2 truncate">1-Click ZIP Download</p>
+        </div>
+
+        <!-- 6. BUGS TRACKER (Replaced Needs Help with Bugs - Target 10/week) -->
+        <div class="stat-card bg-white dark:bg-slate-900 rounded-xl p-3.5 border border-rose-200 dark:border-rose-900/60 shadow-sm relative overflow-hidden cursor-pointer hover:border-rose-400 transition-all" onclick="ui.switchTab('bugs-view')" title="View & Log Weekly Bugs (10/week quota)">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] font-bold text-rose-600 dark:text-rose-400 uppercase tracking-wider flex items-center gap-1">
+              <i data-lucide="bug" class="w-3 h-3 text-rose-500"></i> Bugs Quota
+            </span>
+            <div class="w-7 h-7 rounded-lg bg-rose-50 dark:bg-rose-950/50 text-rose-600 dark:text-rose-400 flex items-center justify-center">
+              <i data-lucide="bug" class="w-3.5 h-3.5"></i>
+            </div>
+          </div>
+          <div class="mt-2 flex items-baseline gap-1.5">
+            <span id="stat-bugs-count" class="text-xl font-extrabold text-rose-600 dark:text-rose-400">0</span>
+            <span class="text-[11px] text-slate-400 font-bold">/ 10 this week</span>
+          </div>
+          <div class="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-1 mt-2 overflow-hidden">
+            <div id="stat-bugs-bar" class="bg-rose-500 h-1 rounded-full transition-all duration-500" style="width: 0%"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Navigation Tabs & Actions -->
+      <section class="bg-white dark:bg-slate-900 rounded-xl p-3 sm:p-4 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          
+          <!-- Tab Switches -->
+          <div class="flex items-center p-1 bg-slate-100 dark:bg-slate-800 rounded-lg overflow-x-auto">
+            <button data-tab="interns-grid" class="tab-btn active-tab flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold transition-all">
+              <i data-lucide="users" class="w-3.5 h-3.5"></i>
+              <span>My Interns</span>
+              <span id="badge-tab-count" class="px-1.5 py-0.2 rounded-full text-[10px] bg-cyan-100 dark:bg-cyan-950 text-cyan-800 dark:text-cyan-300 font-bold">0</span>
+            </button>
+            <button data-tab="active-today-view" class="tab-btn flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all">
+              <i data-lucide="user-check" class="w-3.5 h-3.5 text-emerald-500"></i>
+              <span>Active Today</span>
+              <span id="badge-active-today-count" class="px-1.5 py-0.2 rounded-full text-[10px] bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 font-bold">0</span>
+            </button>
+            <button data-tab="completed-tasks-view" class="tab-btn flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all">
+              <i data-lucide="check-circle" class="w-3.5 h-3.5 text-cyan-500"></i>
+              <span>Task Completed</span>
+              <span id="badge-completed-tasks-count" class="px-1.5 py-0.2 rounded-full text-[10px] bg-cyan-100 dark:bg-cyan-950 text-cyan-800 dark:text-cyan-300 font-bold">0</span>
+            </button>
+            <button data-tab="assessment-submissions-view" class="tab-btn flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all">
+              <i data-lucide="award" class="w-3.5 h-3.5 text-emerald-500"></i>
+              <span>Assessment Done</span>
+              <span id="badge-assessment-submissions-count" class="px-1.5 py-0.2 rounded-full text-[10px] bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 font-bold">0</span>
+            </button>
+            <button data-tab="submissions-view" class="tab-btn flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all">
+              <i data-lucide="file-archive" class="w-3.5 h-3.5 text-amber-500"></i>
+              <span>ZIP Submissions</span>
+              <span id="badge-submissions-count" class="px-1.5 py-0.2 rounded-full text-[10px] bg-amber-100 dark:bg-amber-900 text-amber-700 dark:text-amber-300 font-bold">0</span>
+            </button>
+            <button data-tab="file-dashboard-view" class="tab-btn flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all">
+              <i data-lucide="folder-git-2" class="w-3.5 h-3.5 text-indigo-500"></i>
+              <span>File Dashboard</span>
+              <span id="badge-files-count" class="px-1.5 py-0.2 rounded-full text-[10px] bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 font-bold">0</span>
+            </button>
+            <button data-tab="bugs-view" class="tab-btn flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all">
+              <i data-lucide="bug" class="w-3.5 h-3.5 text-rose-500"></i>
+              <span>Weekly Bugs (10/wk)</span>
+              <span id="badge-bugs-count" class="px-1.5 py-0.2 rounded-full text-[10px] bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300 font-bold">0</span>
+            </button>
+            <button data-tab="kanban-board" class="tab-btn flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all">
+              <i data-lucide="columns-3" class="w-3.5 h-3.5"></i>
+              <span>Workflow Board</span>
+            </button>
+            <button data-tab="analytics" class="tab-btn flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all">
+              <i data-lucide="trending-up" class="w-3.5 h-3.5 text-emerald-500"></i>
+              <span>Student Performance Analysis</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 1: Interns Roster (Only shows interns Palani adds!) -->
+      <section id="tab-content-interns-grid" class="tab-pane">
+        <div id="interns-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <!-- Populated only when Palani adds interns -->
+        </div>
+        
+        <!-- Clean Empty State when no interns added yet -->
+        <div id="interns-empty-state" class="bg-white dark:bg-slate-900 rounded-2xl p-12 text-center border border-dashed border-slate-300 dark:border-slate-800">
+          <div class="w-16 h-16 mx-auto rounded-2xl bg-cyan-50 dark:bg-cyan-950/50 text-cyan-600 dark:text-cyan-400 flex items-center justify-center mb-4">
+            <i data-lucide="user-plus" class="w-8 h-8"></i>
+          </div>
+          <h3 class="text-base font-bold text-slate-900 dark:text-white">No interns added yet</h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400 max-w-md mx-auto mt-1">
+            Hi Palani Pandi C! Click below to add your interns one by one with their Name, Login ID, and Password so they can start submitting their ZIP files.
+          </p>
+          <button onclick="ui.openInternModal()" class="mt-4 px-5 py-2.5 bg-gradient-to-r from-cyan-600 to-teal-600 hover:from-cyan-500 hover:to-teal-500 text-white text-xs font-bold rounded-xl shadow-lg transition-all inline-flex items-center gap-2">
+            <i data-lucide="plus-circle" class="w-4 h-4"></i> Add First Intern Now
+          </button>
+        </div>
+      </section>
+
+      <!-- TAB: Active Today Interns View -->
+      <section id="tab-content-active-today-view" class="tab-pane hidden space-y-4">
+        <div class="flex items-center justify-between flex-wrap gap-3">
+          <div>
+            <div class="flex items-center gap-2">
+              <h2 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                <i data-lucide="user-check" class="w-5 h-5 text-emerald-500"></i>
+                <span>Active Interns Working Today</span>
+              </h2>
+              <span id="tab-active-today-count-badge" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700 flex items-center gap-1">
+                0 Active
+              </span>
+            </div>
+            <p class="text-xs text-slate-500 dark:text-slate-400">
+              Live attendance & ongoing work tracking for interns who logged in today.
+            </p>
+          </div>
+          <button onclick="ui.openTaskModal()" class="px-3 py-1.5 text-xs font-semibold rounded-lg text-white bg-cyan-600 hover:bg-cyan-500 flex items-center gap-1.5 shadow">
+            <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i> Assign Work
+          </button>
+        </div>
+
+        <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-50 dark:bg-slate-800/60 text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-800 font-semibold uppercase tracking-wider text-[10px]">
+                <tr>
+                  <th class="py-3 px-4">Intern Name</th>
+                  <th class="py-3 px-4">College & Department</th>
+                  <th class="py-3 px-4">Login Time</th>
+                  <th class="py-3 px-4">Current Work</th>
+                  <th class="py-3 px-4">Status</th>
+                  <th class="py-3 px-4 text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="table-active-today-body" class="divide-y divide-slate-100 dark:divide-slate-800">
+                <!-- Injected via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: SUBMISSIONS & ZIP DOWNLOAD HUB (CORE REQUIREMENT) -->
+      <section id="tab-content-submissions-view" class="tab-pane hidden space-y-4">
+        <div class="flex items-center justify-between flex-wrap gap-3">
+          <div>
+            <h2 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <i data-lucide="file-archive" class="w-5 h-5 text-amber-500"></i>
+              <span>ZIP File Submissions & Downloads</span>
+            </h2>
+            <p class="text-xs text-slate-500 dark:text-slate-400">
+              Interns upload their project files in <b>.ZIP</b> format. Guide Palani Pandi C can download the exact ZIP archive with 1-click.
+            </p>
+          </div>
+          <button id="btn-manual-upload-zip" class="px-3.5 py-2 bg-amber-600 hover:bg-amber-500 text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 shadow transition-all">
+            <i data-lucide="upload" class="w-4 h-4"></i> Upload ZIP Submission
+          </button>
+        </div>
+
+        <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-50 dark:bg-slate-800/60 text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-800 font-semibold uppercase tracking-wider text-[10px]">
+                <tr>
+                  <th class="py-3 px-4">Intern Name</th>
+                  <th class="py-3 px-4">Work Title</th>
+                  <th class="py-3 px-4">Type</th>
+                  <th class="py-3 px-4">ZIP Archive</th>
+                  <th class="py-3 px-4">Submitted At</th>
+                  <th class="py-3 px-4">Status</th>
+                  <th class="py-3 px-4 text-right">Palani's Action</th>
+                </tr>
+              </thead>
+              <tbody id="table-submissions-body" class="divide-y divide-slate-100 dark:divide-slate-800">
+                <!-- Submissions populated dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB: Completed Tasks View -->
+      <section id="tab-content-completed-tasks-view" class="tab-pane hidden space-y-4">
+        <div class="flex items-center justify-between flex-wrap gap-3">
+          <div>
+            <div class="flex items-center gap-2">
+              <h2 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                <i data-lucide="check-circle" class="w-5 h-5 text-cyan-600 dark:text-cyan-400"></i>
+                <span>Completed Tasks & Deliverables</span>
+              </h2>
+              <span id="tab-completed-tasks-count-badge" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-cyan-100 text-cyan-800 dark:bg-cyan-950 dark:text-cyan-300 border border-cyan-300 dark:border-cyan-700">
+                0 Completed
+              </span>
+            </div>
+            <p class="text-xs text-slate-500 dark:text-slate-400">
+              Tasks and assessments completed by interns with verified .ZIP project submissions.
+            </p>
+          </div>
+          <button onclick="ui.switchTab('submissions-view')" class="px-3 py-1.5 text-xs font-semibold rounded-lg text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/60 hover:bg-amber-100 border border-amber-200 dark:border-amber-800 flex items-center gap-1.5 shadow-sm">
+            <i data-lucide="file-archive" class="w-3.5 h-3.5"></i> View ZIP Archives
+          </button>
+        </div>
+
+        <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-50 dark:bg-slate-800/60 text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-800 font-semibold uppercase tracking-wider text-[10px]">
+                <tr>
+                  <th class="py-3 px-4">Task Deliverable</th>
+                  <th class="py-3 px-4">Intern Name</th>
+                  <th class="py-3 px-4">College / Dept</th>
+                  <th class="py-3 px-4">ZIP Deliverable</th>
+                  <th class="py-3 px-4">Status</th>
+                  <th class="py-3 px-4 text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="table-completed-tasks-body" class="divide-y divide-slate-100 dark:divide-slate-800">
+                <!-- Injected via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB: Assessment Done / Assessment ZIP Submissions View -->
+      <section id="tab-content-assessment-submissions-view" class="tab-pane hidden space-y-4">
+        <div class="flex items-center justify-between flex-wrap gap-3">
+          <div>
+            <div class="flex items-center gap-2">
+              <h2 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                <i data-lucide="award" class="w-5 h-5 text-emerald-600 dark:text-emerald-400"></i>
+                <span>Assessment Submissions (.ZIP Files)</span>
+              </h2>
+              <span id="tab-assessment-count-badge" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700">
+                0 Assessments Submitted
+              </span>
+            </div>
+            <p class="text-xs text-slate-500 dark:text-slate-400">
+              Assessment deliverables submitted by interns in .ZIP format. Guide Palani Pandi C can evaluate and download each ZIP file.
+            </p>
+          </div>
+          <button onclick="ui.switchTab('submissions-view')" class="px-3 py-1.5 text-xs font-semibold rounded-lg text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/60 hover:bg-amber-100 border border-amber-200 dark:border-amber-800 flex items-center gap-1.5 shadow-sm">
+            <i data-lucide="file-archive" class="w-3.5 h-3.5"></i> All ZIP Submissions
+          </button>
+        </div>
+
+        <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-50 dark:bg-slate-800/60 text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-800 font-semibold uppercase tracking-wider text-[10px]">
+                <tr>
+                  <th class="py-3 px-4">Intern Name</th>
+                  <th class="py-3 px-4">Assessment Title</th>
+                  <th class="py-3 px-4">College / Dept</th>
+                  <th class="py-3 px-4">Assessment ZIP Archive</th>
+                  <th class="py-3 px-4">Submitted At</th>
+                  <th class="py-3 px-4">Status</th>
+                  <th class="py-3 px-4 text-right">Download & Review</th>
+                </tr>
+              </thead>
+              <tbody id="table-assessment-submissions-body" class="divide-y divide-slate-100 dark:divide-slate-800">
+                <!-- Assessment submissions injected dynamically via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB: FILE DASHBOARD (PROJECT ZIP STORAGE & MANAGEMENT) -->
+      <section id="tab-content-file-dashboard-view" class="tab-pane hidden space-y-4">
+        <div class="flex items-center justify-between flex-wrap gap-3">
+          <div>
+            <div class="flex items-center gap-2">
+              <h2 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                <i data-lucide="folder-archive" class="w-5 h-5 text-indigo-500"></i>
+                <span>File Dashboard — Project ZIP Storage & Distribution</span>
+              </h2>
+              <span id="tab-file-dashboard-count-badge" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-indigo-100 text-indigo-800 dark:bg-indigo-950 dark:text-indigo-300 border border-indigo-300 dark:border-indigo-700">
+                0 Files Stored
+              </span>
+            </div>
+            <p class="text-xs text-slate-500 dark:text-slate-400">
+              Central cloud storage for project ZIP files, starter kits, documentation & assignment deliverables managed by Guide Palani Pandi C.
+            </p>
+          </div>
+
+          <!-- + Add ZIP File Button -->
+          <button id="btn-add-file-zip" onclick="ui.openAddZipFileModal()" class="px-3.5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 shadow transition-all active:scale-95">
+            <i data-lucide="plus-circle" class="w-4 h-4"></i>
+            <span>+ Add ZIP File</span>
+          </button>
+        </div>
+
+        <!-- Filter & Search Bar for Files -->
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-3 bg-white dark:bg-slate-900 p-3 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+          <div class="relative w-full sm:w-80">
+            <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-2.5"></i>
+            <input 
+              type="text" 
+              id="file-dashboard-search" 
+              placeholder="Search ZIP files, tasks, intern names..." 
+              oninput="ui.filterFileDashboard()"
+              class="w-full text-xs pl-9 pr-3 py-2 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+          </div>
+          <div class="flex items-center gap-2 w-full sm:w-auto">
+            <select id="file-dashboard-filter-intern" onchange="ui.filterFileDashboard()" class="text-xs px-3 py-2 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 focus:outline-none">
+              <option value="ALL">All Interns</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- File Dashboard Table -->
+        <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-50 dark:bg-slate-800/60 text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-800 font-semibold uppercase tracking-wider text-[10px]">
+                <tr>
+                  <th class="py-3 px-4">File Name & Info</th>
+                  <th class="py-3 px-4">Related Task / Work</th>
+                  <th class="py-3 px-4">Assigned Intern</th>
+                  <th class="py-3 px-4">Size</th>
+                  <th class="py-3 px-4">Uploaded Date/Time</th>
+                  <th class="py-3 px-4 text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="table-files-dashboard-body" class="divide-y divide-slate-100 dark:divide-slate-800">
+                <!-- Dynamically populated files -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+      <section id="tab-content-bugs-view" class="tab-pane hidden space-y-4">
+        <div class="flex items-center justify-between flex-wrap gap-3">
+          <div>
+            <div class="flex items-center gap-2">
+              <h2 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                <i data-lucide="bug" class="w-5 h-5 text-rose-500"></i>
+                <span>Weekly Bugs Tracker (Target: 10 Bugs / Week)</span>
+              </h2>
+              <span id="badge-weekly-quota-pill" class="px-2.5 py-0.5 text-xs font-bold rounded-full bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300">
+                0 / 10 Bugs Solved
+              </span>
+            </div>
+            <p class="text-xs text-slate-500 dark:text-slate-400">
+              Every week, all interns collectively must find, document, and solve <b>10 bugs</b>.
+            </p>
+          </div>
+          <button id="btn-quick-log-bug" class="px-3.5 py-2 bg-rose-600 hover:bg-rose-500 text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 shadow transition-all">
+            <i data-lucide="plus" class="w-4 h-4"></i> Log New Bug
+          </button>
+        </div>
+
+        <!-- Weekly Progress Card -->
+        <div class="p-4 rounded-xl bg-gradient-to-r from-rose-500/10 via-amber-500/10 to-transparent border border-rose-200 dark:border-rose-900/60 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div class="space-y-1">
+            <h4 class="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">Weekly Quota Progress</h4>
+            <p class="text-xs text-slate-600 dark:text-slate-300">Interns must submit and resolve 10 bugs each week across all modules.</p>
+          </div>
+          <div class="sm:w-64 space-y-1.5">
+            <div class="flex items-center justify-between text-xs font-bold">
+              <span class="text-rose-600 dark:text-rose-400" id="bugs-quota-text">0 of 10 completed</span>
+              <span id="bugs-quota-pct" class="text-slate-500">0%</span>
+            </div>
+            <div class="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-2 overflow-hidden">
+              <div id="bugs-quota-bar" class="bg-rose-500 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bugs Table -->
+        <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-50 dark:bg-slate-800/60 text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-800 font-semibold uppercase tracking-wider text-[10px]">
+                <tr>
+                  <th class="py-3 px-4">Bug Title</th>
+                  <th class="py-3 px-4">Reported By Intern</th>
+                  <th class="py-3 px-4">Category / Module</th>
+                  <th class="py-3 px-4">Severity</th>
+                  <th class="py-3 px-4">Bug Document</th>
+                  <th class="py-3 px-4">Status</th>
+                  <th class="py-3 px-4 text-right">Action</th>
+                </tr>
+              </thead>
+              <tbody id="table-bugs-body" class="divide-y divide-slate-100 dark:divide-slate-800">
+                <!-- Bugs list -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: Workflow Kanban Board -->
+      <section id="tab-content-kanban-board" class="tab-pane hidden">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div class="bg-slate-100/70 dark:bg-slate-900/60 rounded-xl p-3 border border-slate-200 dark:border-slate-800 flex flex-col max-h-[750px]">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">To Do</h4>
+              <span id="kanban-count-todo" class="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400">0</span>
+            </div>
+            <div id="kanban-col-todo" class="kanban-dropzone flex-1 overflow-y-auto space-y-3 py-3 pr-1" data-status="To Do"></div>
+          </div>
+
+          <div class="bg-slate-100/70 dark:bg-slate-900/60 rounded-xl p-3 border border-slate-200 dark:border-slate-800 flex flex-col max-h-[750px]">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">In Progress</h4>
+              <span id="kanban-count-inprogress" class="text-xs font-semibold px-2 py-0.5 rounded-full bg-amber-100 dark:bg-amber-950/60 text-amber-700 dark:text-amber-400">0</span>
+            </div>
+            <div id="kanban-col-inprogress" class="kanban-dropzone flex-1 overflow-y-auto space-y-3 py-3 pr-1" data-status="In Progress"></div>
+          </div>
+
+          <div class="bg-slate-100/70 dark:bg-slate-900/60 rounded-xl p-3 border border-slate-200 dark:border-slate-800 flex flex-col max-h-[750px]">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">Under Review</h4>
+              <span id="kanban-count-review" class="text-xs font-semibold px-2 py-0.5 rounded-full bg-rose-100 dark:bg-rose-950/60 text-rose-700 dark:text-rose-400">0</span>
+            </div>
+            <div id="kanban-col-review" class="kanban-dropzone flex-1 overflow-y-auto space-y-3 py-3 pr-1" data-status="Under Review"></div>
+          </div>
+
+          <div class="bg-slate-100/70 dark:bg-slate-900/60 rounded-xl p-3 border border-slate-200 dark:border-slate-800 flex flex-col max-h-[750px]">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">Completed Works</h4>
+              <span id="kanban-count-completed" class="text-xs font-semibold px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400">0</span>
+            </div>
+            <div id="kanban-col-completed" class="kanban-dropzone flex-1 overflow-y-auto space-y-3 py-3 pr-1" data-status="Completed"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 5: STUDENT PERFORMANCE ANALYSIS (WHO IS WORKING BEST) -->
+      <section id="tab-content-analytics" class="tab-pane hidden space-y-6">
+        <div class="flex items-center justify-between">
+          <div>
+            <h2 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <i data-lucide="award" class="w-5 h-5 text-amber-500"></i>
+              <span>Student Performance & Work Completion Analysis</span>
+            </h2>
+            <p class="text-xs text-slate-500 dark:text-slate-400">
+              Evaluates which interns are completing tasks, assessments, resolving bugs, and uploading approved .ZIP deliverables.
+            </p>
+          </div>
+        </div>
+
+        <!-- Top Student Ranking Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="performance-top-cards">
+          <!-- Top 3 ranked students will render here -->
+        </div>
+
+        <!-- Comparative Chart -->
+        <div class="bg-white dark:bg-slate-900 rounded-xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm">
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <h3 class="text-sm font-bold text-slate-900 dark:text-white">Work Completion by Intern</h3>
+              <p class="text-xs text-slate-500 dark:text-slate-400">Tasks Completed vs Assessments vs Bugs Solved</p>
+            </div>
+            <div class="w-8 h-8 rounded-lg bg-cyan-50 dark:bg-cyan-950/50 text-cyan-600 dark:text-cyan-400 flex items-center justify-center">
+              <i data-lucide="bar-chart-2" class="w-4 h-4"></i>
+            </div>
+          </div>
+          <div class="h-64 flex items-center justify-center relative">
+            <canvas id="chart-student-performance"></canvas>
+          </div>
+        </div>
+
+        <!-- Detailed Student Performance Table -->
+        <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm">
+          <div class="px-5 py-3 border-b border-slate-200 dark:border-slate-800 font-bold text-xs">
+            Comprehensive Intern Performance Leaderboard
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-50 dark:bg-slate-800/60 text-slate-500 dark:text-slate-400 font-semibold uppercase text-[10px]">
+                <tr>
+                  <th class="py-3 px-4">Rank</th>
+                  <th class="py-3 px-4">Intern Name</th>
+                  <th class="py-3 px-4">Tasks Completed</th>
+                  <th class="py-3 px-4">Assessments Done</th>
+                  <th class="py-3 px-4">Bugs Solved</th>
+                  <th class="py-3 px-4">ZIP Submissions</th>
+                  <th class="py-3 px-4">Overall Score</th>
+                  <th class="py-3 px-4 text-right">Performance Status</th>
+                </tr>
+              </thead>
+              <tbody id="table-performance-body" class="divide-y divide-slate-100 dark:divide-slate-800">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-auto border-t border-slate-200 dark:border-slate-800 py-4 bg-white/50 dark:bg-slate-900/50 text-center text-xs text-slate-500 dark:text-slate-400">
+      <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
+        <div class="flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-cyan-500 animate-pulse"></span>
+          <span>Palani Interns Work flow &copy; 2026 &bull; Guide: <strong>Palani Pandi C</strong> (Tarcin Robotics LLP)</span>
+        </div>
+        <div class="text-[11px] text-slate-400 font-mono">
+          Only .ZIP Deliverables &bull; Weekly 10 Bugs Quota &bull; Tarcin Interns Portal
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ================= 3. TARCIN INTERNS PERSONAL PORTAL VIEW ================= -->
+  <div id="view-intern" class="hidden flex-1 flex flex-col min-h-screen">
+    <header class="sticky top-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 transition-colors">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-600 to-teal-600 flex items-center justify-center text-white shadow-md">
+              <i data-lucide="user-check" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <h2 id="intern-portal-welcome-name" class="text-base font-bold text-slate-900 dark:text-white">Intern Name</h2>
+                <span class="px-2 py-0.5 text-[10px] font-bold rounded-full bg-cyan-100 text-cyan-800 dark:bg-cyan-950 dark:text-cyan-300">
+                  Tarcin Interns Portal
+                </span>
+              </div>
+              <p class="text-xs text-slate-500 dark:text-slate-400">
+                Guide: <b>Palani Pandi C</b> (Tarcin Robotics LLP) &bull; <span id="intern-portal-domain" class="font-semibold text-cyan-700 dark:text-cyan-400">Domain</span>
+              </p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2 sm:gap-3">
+            <!-- Visit Guide Dashboard Button (Requested by User: to the left of Upload Work .ZIP) -->
+            <button 
+              id="btn-intern-view-guide" 
+              onclick="ui.viewGuideDashboardFromIntern()" 
+              title="Visit Guide Palani Pandi C's Workflow Dashboard" 
+              class="px-3 py-1.5 rounded-lg text-xs font-bold text-cyan-700 dark:text-cyan-300 bg-cyan-50 hover:bg-cyan-100 dark:bg-cyan-950/70 dark:hover:bg-cyan-900/60 border border-cyan-200 dark:border-cyan-800 shadow-sm flex items-center gap-1.5 active:scale-95 transition-all">
+              <i data-lucide="layout-dashboard" class="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400"></i>
+              <span class="hidden sm:inline">Guide Dashboard</span>
+              <span class="sm:hidden">Guide</span>
+            </button>
+
+            <!-- Submit Task ZIP Button -->
+            <button id="btn-intern-upload-zip" class="px-3.5 py-1.5 rounded-lg text-xs font-bold text-white bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 shadow-md flex items-center gap-1.5 active:scale-95 transition-all">
+              <i data-lucide="upload" class="w-3.5 h-3.5"></i>
+              <span>Upload Work (.ZIP)</span>
+            </button>
+
+            <!-- Submit Bug Document Button -->
+            <button id="btn-intern-log-bug" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-rose-600 dark:text-rose-300 bg-rose-50 hover:bg-rose-100 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-900 flex items-center gap-1.5 shadow-sm active:scale-95 transition-all">
+              <i data-lucide="file-plus" class="w-3.5 h-3.5"></i> Submit Bug Document
+            </button>
+
+            <!-- Theme Toggle -->
+            <button onclick="ui.toggleTheme()" class="p-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700">
+              <i data-lucide="moon" class="w-4 h-4"></i>
+            </button>
+
+            <!-- Intern Logout -->
+            <button id="btn-intern-logout" class="p-2 rounded-lg text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 border border-rose-200 dark:border-rose-900/60">
+              <i data-lucide="log-out" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Intern Content Area -->
+    <main class="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+      
+      <!-- Welcome Alert & Intern Profile Summary -->
+      <div class="bg-gradient-to-r from-slate-900 via-cyan-950 to-slate-900 border border-cyan-800/50 rounded-2xl p-6 text-white shadow-lg relative overflow-hidden">
+        <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div class="space-y-2">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
+              Guide: Palani Pandi C &bull; Tarcin Robotics LLP
+            </span>
+            <h2 class="text-xl font-extrabold tracking-tight">Complete Your Assigned Work & Submit Deliverables</h2>
+          </div>
+
+          <!-- Intern Profile: Name, College, Year (Entered by Guide Palani) -->
+          <div class="bg-white/10 backdrop-blur-md border border-white/15 rounded-xl px-4 py-3 shrink-0 flex items-center gap-3 shadow-inner">
+            <div id="intern-banner-avatar" class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-600 to-teal-500 flex items-center justify-center text-white font-black text-sm shadow">
+              IN
+            </div>
+            <div class="space-y-0.5">
+              <div class="flex items-center gap-2">
+                <span id="intern-banner-name" class="font-bold text-white text-sm">Intern Name</span>
+                <span id="intern-banner-year" class="px-2 py-0.5 text-[10px] font-bold rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/30">
+                  3rd Year
+                </span>
+              </div>
+              <div class="text-xs text-cyan-200/90 flex items-center gap-1.5">
+                <i data-lucide="graduation-cap" class="w-3.5 h-3.5 text-cyan-300"></i>
+                <span id="intern-banner-college">College</span>
+                <span id="intern-banner-dept-separator">&bull;</span>
+                <span id="intern-banner-dept" class="text-slate-300">Department</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Intern Stats -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm text-center">
+          <span class="text-[10px] font-bold text-slate-400 uppercase">My Assigned Works</span>
+          <p id="intern-stat-total" class="text-xl font-black text-slate-900 dark:text-white mt-1">0</p>
+        </div>
+        <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm text-center">
+          <span class="text-[10px] font-bold text-cyan-600 dark:text-cyan-400 uppercase">Tasks Completed</span>
+          <p id="intern-stat-tasks-done" class="text-xl font-black text-cyan-600 dark:text-cyan-400 mt-1">0</p>
+        </div>
+        <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm text-center">
+          <span class="text-[10px] font-bold text-emerald-500 uppercase">Assessments Done</span>
+          <p id="intern-stat-assessments-done" class="text-xl font-black text-emerald-600 dark:text-emerald-400 mt-1">0</p>
+        </div>
+        <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm text-center">
+          <span class="text-[10px] font-bold text-amber-500 uppercase">ZIP Submissions</span>
+          <p id="intern-stat-zips" class="text-xl font-black text-amber-600 dark:text-amber-400 mt-1">0</p>
+        </div>
+      </div>
+
+      <!-- 1. Assessments (FIRST as requested) -->
+      <div class="bg-white dark:bg-slate-900 rounded-xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+        <div class="flex items-center justify-between">
+          <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            <i data-lucide="award" class="w-4 h-4 text-emerald-500"></i>
+            <span>Assessments</span>
+          </h3>
+          <span class="text-xs text-slate-400">Type details, attach .ZIP & click Submit</span>
+        </div>
+
+        <div id="intern-assigned-assessments-list" class="space-y-3">
+          <!-- Populated dynamically with tasks where type === 'Assessment' -->
+        </div>
+
+        <!-- Direct Assessment Submission Form (Type & Share .ZIP to Guide Palani) -->
+        <div class="mt-4 pt-4 border-t border-slate-100 dark:border-slate-800/80">
+          <div class="rounded-xl border border-emerald-200 dark:border-emerald-800/60 bg-emerald-50/30 dark:bg-emerald-950/20 p-4 sm:p-5 space-y-3">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <div class="w-7 h-7 rounded-lg bg-emerald-100 dark:bg-emerald-900/60 text-emerald-700 dark:text-emerald-300 flex items-center justify-center">
+                  <i data-lucide="file-check-2" class="w-4 h-4"></i>
+                </div>
+                <div>
+                  <h4 class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white">Submit Assessment (.ZIP)</h4>
+                  <p class="text-[11px] text-slate-500 dark:text-slate-400">Type your assessment details and upload your .ZIP project archive directly to Guide Palani Pandi C</p>
+                </div>
+              </div>
+              <span class="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700">
+                .ZIP Only
+              </span>
+            </div>
+
+            <form id="form-intern-direct-assessment" class="space-y-3">
+              <input type="hidden" id="intern-direct-assessment-task-id" value="" />
+              
+              <div>
+                <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                  Assessment Title / Work Topic <span class="text-rose-500">*</span>
+                </label>
+                <input 
+                  type="text" 
+                  id="intern-direct-assessment-title" 
+                  required 
+                  placeholder="e.g. Embedded C Timer & ADC Assessment / IoT Protocol Implementation..." 
+                  class="w-full text-xs px-3 py-2 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                />
+              </div>
+
+              <div>
+                <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                  Assessment Work Description / Notes
+                </label>
+                <textarea 
+                  id="intern-direct-assessment-notes" 
+                  rows="2" 
+                  placeholder="Type your assessment summary, findings, test results, or hardware simulation remarks here..." 
+                  class="w-full text-xs px-3 py-2 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                ></textarea>
+              </div>
+
+              <div>
+                <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                  Attach Project Archive (<span class="text-emerald-600 dark:text-emerald-400 font-bold">.ZIP file</span>) <span class="text-rose-500">*</span>
+                </label>
+                <div class="relative border-2 border-dashed border-emerald-300 dark:border-emerald-700/60 rounded-xl p-3.5 text-center hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 transition-colors">
+                  <input 
+                    type="file" 
+                    id="intern-direct-assessment-file" 
+                    required 
+                    accept=".zip,application/zip,application/x-zip-compressed" 
+                    class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                  />
+                  <div class="flex items-center justify-center gap-2">
+                    <i data-lucide="file-archive" class="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0"></i>
+                    <span id="intern-direct-assessment-filename" class="text-xs font-medium text-slate-700 dark:text-slate-300 truncate">
+                      Click to choose or Drag & Drop .ZIP file here
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="pt-1 flex items-center justify-between">
+                <span class="text-[11px] text-slate-400 italic">Delivered directly to Guide Palani's Assessment Submissions</span>
+                <button 
+                  type="submit" 
+                  id="btn-direct-assessment-submit" 
+                  class="px-5 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center gap-1.5 shadow-md active:scale-95 transition-all">
+                  <i data-lucide="send" class="w-3.5 h-3.5"></i>
+                  <span>Submit</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. My Tasks (SECOND as requested) -->
+      <div class="bg-white dark:bg-slate-900 rounded-xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+        <div class="flex items-center justify-between">
+          <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            <i data-lucide="list-checks" class="w-4 h-4 text-cyan-500"></i>
+            <span>My Tasks</span>
+          </h3>
+          <span class="text-xs text-slate-400">Click 'Submit .ZIP' when complete</span>
+        </div>
+
+        <div id="intern-assigned-tasks-list" class="space-y-3">
+          <!-- Populated dynamically with tasks where type === 'Task' -->
+        </div>
+      </div>
+
+      <!-- 3. My Uploaded ZIP Deliverables (THIRD as requested) -->
+      <div class="bg-white dark:bg-slate-900 rounded-xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+        <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
+          <i data-lucide="file-archive" class="w-4 h-4 text-amber-500"></i>
+          <span>My Uploaded ZIP Deliverables</span>
+        </h3>
+        <div id="intern-my-submissions-list" class="space-y-2">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+
+      <!-- 4. Project Files & Resources (.ZIP) Shared by Guide Palani Pandi C -->
+      <div class="bg-white dark:bg-slate-900 rounded-xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+        <div class="flex items-center justify-between">
+          <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            <i data-lucide="folder-git-2" class="w-4 h-4 text-indigo-500"></i>
+            <span>Project Files & Starter Kits (.ZIP) from Guide</span>
+          </h3>
+          <span class="text-xs text-slate-400">1-Click Secure Download</span>
+        </div>
+        <div id="intern-assigned-files-list" class="space-y-2">
+          <!-- Dynamically populated files with 1-click download -->
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- ================= MODALS ================= -->
+
+  <!-- 1. Supervisor Settings Modal (Palani Pandi C) -->
+  <div id="modal-sup-settings" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm hidden flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white dark:bg-slate-900 rounded-2xl max-w-md w-full border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden my-8 animate-in fade-in zoom-in-95 duration-150">
+      <div class="px-6 py-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between bg-slate-50/50 dark:bg-slate-800/40">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl bg-cyan-100 dark:bg-cyan-900/50 text-cyan-600 dark:text-cyan-400 flex items-center justify-center">
+            <i data-lucide="shield-check" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="text-base font-bold text-slate-900 dark:text-white">Guide Profile & Credentials</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Palani Pandi C - Tarcin Robotics LLP</p>
+          </div>
+        </div>
+        <button class="modal-close-btn p-1.5 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <form id="form-sup-settings" class="p-6 space-y-4">
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Guide Full Name</label>
+          <input type="text" id="setting-sup-name" required value="Palani Pandi C" class="w-full text-xs px-3 py-2 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-cyan-500 focus:outline-none" />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Designation & Company</label>
+          <input type="text" id="setting-sup-org" required value="Embedded & IoT Engineer working at Tarcin Robotics LLP" class="w-full text-xs px-3 py-2 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-cyan-500 focus:outline-none" />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Login Username</label>
+          <input type="text" id="setting-sup-username" required value="palani" class="w-full text-xs px-3 py-2 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-cyan-500 focus:outline-none font-mono" />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">New Password (leave empty to keep current)</label>
+          <input type="password" id="setting-sup-password" placeholder="••••••••" class="w-full text-xs px-3 py-2 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-cyan-500 focus:outline-none font-mono" />
+        </div>
+
+        <div class="pt-4 border-t border-slate-200 dark:border-slate-800 flex items-center justify-end gap-3">
+          <button type="button" class="modal-close-btn px-4 py-2 text-xs font-semibold rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">Cancel</button>
+          <button type="submit" class="px-5 py-2 text-xs font-semibold rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white shadow-md">Update Profile</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 2. Add / Edit Intern Modal (Clean and simple with Name & Password) -->
+  <div id="modal-intern" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-900 rounded-2xl max-w-lg w-full border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden my-auto max-h-[92vh] flex flex-col">
+      
+      <!-- Sticky Modal Header with Prominent Close 'X' Button -->
+      <div class="px-6 py-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between bg-slate-50 dark:bg-slate-800/90 backdrop-blur-md sticky top-0 z-20">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl bg-cyan-100 dark:bg-cyan-900/50 text-cyan-600 dark:text-cyan-400 flex items-center justify-center">
+            <i data-lucide="user-plus" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 id="modal-intern-title" class="text-base font-bold text-slate-900 dark:text-white">Add Intern to Tarcin Robotics</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Set up intern profile & create credentials for login</p>
+          </div>
+        </div>
+        <button type="button" class="modal-close-btn p-2 rounded-xl text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 transition-colors flex items-center justify-center shadow-sm" title="Close" aria-label="Close modal">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <form id="form-intern" class="p-6 space-y-4 overflow-y-auto flex-1">
+        <input type="hidden" id="intern-id" value="">
+
+        <!-- Name & College -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Intern Full Name <span class="text-rose-500">*</span></label>
+            <input type="text" id="intern-name" required placeholder="e.g. Vignesh Kumar" class="w-full text-xs px-3 py-2 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-cyan-500 focus:outline-none" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">College / University</label>
+            <input type="text" id="intern-college" placeholder="e.g. PSG Tech / CIT" class="w-full text-xs px-3 py-2 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-cyan-500 focus:outline-none" />
+          </div>
+        </div>
+
+        <!-- Year & Department (Requested by User) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Department</label>
+            <input type="text" id="intern-department" placeholder="e.g. ECE / EEE / Mechatronics / CSE" class="w-full text-xs px-3 py-2 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-cyan-500 focus:outline-none" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Year of Study</label>
+            <select id="intern-year" class="w-full text-xs px-3 py-2 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-cyan-500 focus:outline-none">
+              <option value="1st Year">1st Year</option>
+              <option value="2nd Year">2nd Year</option>
+              <option value="3rd Year" selected>3rd Year</option>
+              <option value="4th Year (Final Year)">4th Year (Final Year)</option>
+              <option value="Graduate / Passed Out">Graduate / Passed Out</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- CREDENTIALS CREATED DIRECTLY BY PALANI -->
+        <div class="p-3.5 bg-cyan-50/70 dark:bg-cyan-950/40 rounded-xl border border-cyan-200 dark:border-cyan-900/60 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-cyan-900 dark:text-cyan-300 flex items-center gap-1.5">
+              <i data-lucide="key" class="w-4 h-4 text-cyan-600"></i> Intern Login Credentials (Created by Palani)
+            </span>
+            <button type="button" onclick="ui.generateInternCredentials()" class="text-[10px] font-bold text-cyan-600 dark:text-cyan-400 hover:underline">
+              Auto-Fill Passcode
+            </button>
+          </div>
+          
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-[11px] font-semibold text-slate-700 dark:text-slate-300 mb-1">Login Username <span class="text-rose-500">*</span></label>
+              <input type="text" id="intern-cred-username" required placeholder="e.g. vignesh or intern1" class="w-full text-xs px-3 py-1.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-cyan-500 focus:outline-none font-mono" />
+            </div>
+            <div>
+              <label class="block text-[11px] font-semibold text-slate-700 dark:text-slate-300 mb-1">Login Password <span class="text-rose-500">*</span></label>
+              <input type="text" id="intern-cred-password" required placeholder="e.g. intern123" class="w-full text-xs px-3 py-1.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-cyan-500 focus:outline-none font-mono" />
+            </div>
+          </div>
+          <p class="text-[10px] text-cyan-700 dark:text-cyan-400">Intern will use these exact credentials on the <b>Tarcin Interns</b> login page.</p>
+        </div>
+
+        <!-- Domain & Status -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Domain / Project Focus</label>
+            <input type="text" id="intern-domain" placeholder="e.g. Embedded C / ESP32 IoT / KiCad PCB" class="w-full text-xs px-3 py-2 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-cyan-500 focus:outline-none" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Work Status</label>
+            <select id="intern-status" class="w-full text-xs px-3 py-2 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-cyan-500 focus:outline-none">
+              <option value="Active">Active (Working)</option>
+              <option value="In Review">In Review</option>
+              <option value="Task Completed">Task Completed</option>
+              <option value="Assessment Completed">Assessment Completed</option>
+              <option value="On Leave">On Leave</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Task to Assign (Multi-task assignment supported) -->
+        <div id="initial-task-container" class="space-y-2">
+          <div class="flex items-center justify-between">
+            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300">Task to Assign</label>
+            <span class="text-[10px] text-slate-400">Assign one or more tasks to get started</span>
+          </div>
+          <div id="task-inputs-list" class="space-y-2">
+            <div class="task-input-row flex items-center gap-2">
+              <input type="text" name="intern-tasks[]" placeholder="e.g. Set up ESP32 environment & push button debounce interrupt" class="flex-1 text-xs px-3 py-2 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-cyan-500 focus:outline-none" />
+            </div>
+          </div>
+          <button type="button" id="btn-add-another-task" onclick="ui.addAnotherTaskField()" class="text-xs font-semibold text-cyan-600 dark:text-cyan-400 hover:text-cyan-500 flex items-center gap-1.5 pt-1">
+            <i data-lucide="plus-circle" class="w-4 h-4"></i>
+            <span>+ Add another task</span>
+          </button>
+        </div>
+
+        <div class="pt-4 border-t border-slate-200 dark:border-slate-800 flex items-center justify-end gap-3 sticky bottom-0 bg-white dark:bg-slate-900 py-2">
+          <button type="button" class="modal-close-btn px-4 py-2 text-xs font-semibold rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">Cancel</button>
+          <button type="submit" class="px-5 py-2 text-xs font-semibold rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white shadow-md">Save Intern & Credentials</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 3. Assign Work Modal -->
+  <div id="modal-task" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm hidden flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white dark:bg-slate-900 rounded-2xl max-w-lg w-full border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden my-8">
+      
+      <div class="px-6 py-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between bg-slate-50/50 dark:bg-slate-800/40">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl bg-cyan-100 dark:bg-cyan-900/50 text-cyan-600 dark:text-cyan-400 flex items-center justify-center">
+            <i data-lucide="check-square" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="text-base font-bold text-slate-900 dark:text-white">Assign Work Deliverable</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Allocate Regular Task or Assessment</p>
+          </div>
+        </div>
+        <button class="modal-close-btn p-1.5 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <form id="form-task" class="p-6 space-y-4">
+        <input type="hidden" id="task-id" value="">
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Assign to Intern <span class="text-rose-500">*</span></label>
+          <select id="task-intern-id" required class="w-full text-xs px-3 py-2 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-cyan-500 focus:outline-none">
+            <!-- Populated via JS -->
+          </select>
+        </div>
+
+        <div class="p-3 bg-slate-50 dark:bg-slate-800/60 rounded-xl border border-slate-200 dark:border-slate-700">
+          <label class="block text-xs font-bold text-slate-800 dark:text-slate-200 mb-1.5">Work Type <span class="text-rose-500">*</span></label>
+          <div class="grid grid-cols-2 gap-3">
+            <label class="flex items-center gap-2 p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 cursor-pointer hover:border-cyan-500">
+              <input type="radio" name="work-type" value="Task" checked class="text-cyan-600 focus:ring-cyan-500" />
+              <div>
+                <span class="text-xs font-bold text-slate-900 dark:text-white block">Regular Task</span>
+                <span class="text-[10px] text-slate-400">Daily module / experiment</span>
+              </div>
+            </label>
+            <label class="flex items-center gap-2 p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 cursor-pointer hover:border-emerald-500">
+              <input type="radio" name="work-type" value="Assessment" class="text-emerald-600 focus:ring-emerald-500" />
+              <div>
+                <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400 block">Assessment / Milestone</span>
+                <span class="text-[10px] text-slate-400">Formal milestone evaluation</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Title <span class="text-rose-500">*</span></label>
+          <input type="text" id="task-title" required placeholder="e.g. ESP32 MQTT telemetry & sensor read" class="w-full text-xs px-3 py-2 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-cyan-500 focus:outline-none" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Instructions / Description</label>
+          <textarea id="task-description" rows="3" placeholder="Provide instructions. Specify what files must be inside the submitted .ZIP..." class="w-full text-xs px-3 py-2 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-cyan-500 focus:outline-none"></textarea>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Priority</label>
+            <select id="task-priority" class="w-full text-xs px-3 py-2 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-cyan-500 focus:outline-none">
+              <option value="Normal">Normal</option>
+              <option value="High">High</option>
+              <option value="Urgent">Urgent 🔥</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Status</label>
+            <select id="task-status" class="w-full text-xs px-3 py-2 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-cyan-500 focus:outline-none">
+              <option value="To Do">To Do</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Under Review">Under Review</option>
+              <option value="Task Completed">Task Completed</option>
+              <option value="Assessment Completed">Assessment Completed</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Deadline</label>
+            <input type="date" id="task-due-date" class="w-full text-xs px-3 py-2 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-cyan-500 focus:outline-none" />
+          </div>
+        </div>
+
+        <div class="pt-4 border-t border-slate-200 dark:border-slate-800 flex items-center justify-end gap-3">
+          <button type="button" class="modal-close-btn px-4 py-2 text-xs font-semibold rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">Cancel</button>
+          <button type="submit" class="px-5 py-2 text-xs font-semibold rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white shadow-md">Assign Work</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 4. LOG BUG MODAL (Weekly 10 Bugs Quota Tracker) -->
+  <div id="modal-bug" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm hidden flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white dark:bg-slate-900 rounded-2xl max-w-lg w-full border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden my-8">
+      
+      <div class="px-6 py-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between bg-rose-50/50 dark:bg-rose-950/20">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl bg-rose-100 dark:bg-rose-900/50 text-rose-600 dark:text-rose-400 flex items-center justify-center">
+            <i data-lucide="bug" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="text-base font-bold text-slate-900 dark:text-white">Log Bug (Weekly 10-Bug Quota)</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Record bug identified/resolved during testing</p>
+          </div>
+        </div>
+        <button class="modal-close-btn p-1.5 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <form id="form-bug" class="p-6 space-y-4">
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Intern Who Found / Solved <span class="text-rose-500">*</span></label>
+          <select id="bug-intern-id" required class="w-full text-xs px-3 py-2 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-rose-500 focus:outline-none">
+            <!-- Populated via JS -->
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Bug Title / Summary <span class="text-rose-500">*</span></label>
+          <input type="text" id="bug-title" required placeholder="e.g. I2C bus hanging when reading sensor without timeout" class="w-full text-xs px-3 py-2 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-rose-500 focus:outline-none" />
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Category / Component</label>
+            <input type="text" id="bug-category" placeholder="e.g. Firmware / Circuit / Driver" class="w-full text-xs px-3 py-2 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-rose-500 focus:outline-none" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Severity</label>
+            <select id="bug-severity" class="w-full text-xs px-3 py-2 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-rose-500 focus:outline-none">
+              <option value="Minor">Minor</option>
+              <option value="Major" selected>Major</option>
+              <option value="Critical">Critical 🔥</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Bug Status</label>
+          <select id="bug-status" class="w-full text-xs px-3 py-2 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-rose-500 focus:outline-none">
+            <option value="Resolved">Resolved (Counts to Quota ✓)</option>
+            <option value="Open">Open (In Investigation)</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Description / Fix Details</label>
+          <textarea id="bug-description" rows="2" placeholder="Explain how the bug occurred and what code/circuit modification fixed it..." class="w-full text-xs px-3 py-2 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-rose-500 focus:outline-none"></textarea>
+        </div>
+
+        <!-- Bug Document File Upload -->
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+            Attach Bug Document / Report <span class="text-rose-500">*</span>
+          </label>
+          <div class="relative border-2 border-dashed border-rose-300 dark:border-rose-800/80 rounded-xl p-4 text-center hover:border-rose-500 transition-colors bg-rose-50/30 dark:bg-rose-950/20 cursor-pointer">
+            <input type="file" id="bug-doc-file" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" accept=".pdf,.doc,.docx,.zip,.png,.jpg,.jpeg,.txt,.md" />
+            <div class="flex flex-col items-center gap-1.5 pointer-events-none">
+              <i data-lucide="file-up" class="w-6 h-6 text-rose-500"></i>
+              <p id="bug-doc-name-display" class="text-xs font-semibold text-slate-700 dark:text-slate-200">
+                Click or Drag & Drop Bug Document here
+              </p>
+              <span class="text-[10px] text-slate-400">Accepts PDF, Word, ZIP, Screenshot, or Text Report</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-4 border-t border-slate-200 dark:border-slate-800 flex items-center justify-end gap-3">
+          <button type="button" class="modal-close-btn px-4 py-2 text-xs font-semibold rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">Cancel</button>
+          <button type="submit" class="px-5 py-2 text-xs font-semibold rounded-lg bg-rose-600 hover:bg-rose-500 text-white shadow-md flex items-center gap-1.5">
+            <i data-lucide="file-check" class="w-3.5 h-3.5"></i>
+            <span>Submit Bug Document</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 5. UPLOAD ZIP FILE MODAL (ONLY .ZIP ALLOWED) -->
+  <div id="modal-upload-zip" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm hidden flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white dark:bg-slate-900 rounded-2xl max-w-lg w-full border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden my-8">
+      
+      <div class="px-6 py-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between bg-amber-50/50 dark:bg-amber-950/20">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl bg-amber-100 dark:bg-amber-900/50 text-amber-600 dark:text-amber-400 flex items-center justify-center">
+            <i data-lucide="file-archive" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="text-base font-bold text-slate-900 dark:text-white">Upload Completed Work (.ZIP)</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Bundle your source code, project files & simulation into a .ZIP</p>
+          </div>
+        </div>
+        <button class="modal-close-btn p-1.5 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <form id="form-upload-zip" class="p-6 space-y-4">
+        <div id="zip-intern-select-wrapper">
+          <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Intern <span class="text-rose-500">*</span></label>
+          <select id="zip-intern-id" required class="w-full text-xs px-3 py-2 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-amber-500 focus:outline-none">
+            <!-- Populated via JS -->
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Select Completed Task / Work <span class="text-rose-500">*</span></label>
+          <select id="zip-task-id" required class="w-full text-xs px-3 py-2 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-amber-500 focus:outline-none">
+            <!-- Populated via JS -->
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Mark Completion As <span class="text-rose-500">*</span></label>
+          <div class="grid grid-cols-2 gap-3">
+            <label class="flex items-center gap-2 p-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 cursor-pointer">
+              <input type="radio" name="completion-category" value="Task Completed" checked class="text-cyan-600" />
+              <span class="text-xs font-bold text-slate-800 dark:text-slate-200">Task Completed</span>
+            </label>
+            <label class="flex items-center gap-2 p-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 cursor-pointer">
+              <input type="radio" name="completion-category" value="Assessment Completed" class="text-emerald-600" />
+              <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400">Assessment Completed</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Strict .ZIP only -->
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+            Choose Project File (<span class="text-amber-600 dark:text-amber-400 font-bold">.ZIP only</span>) <span class="text-rose-500">*</span>
+          </label>
+          <div class="relative border-2 border-dashed border-amber-300 dark:border-amber-800/80 rounded-xl p-4 text-center hover:bg-amber-50/40 dark:hover:bg-amber-950/20 transition-colors">
+            <input 
+              type="file" 
+              id="zip-file-input" 
+              required 
+              accept=".zip,application/zip,application/x-zip-compressed" 
+              class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+            />
+            <div class="space-y-1">
+              <i data-lucide="file-archive" class="w-8 h-8 mx-auto text-amber-500"></i>
+              <div class="text-xs font-bold text-slate-800 dark:text-slate-200" id="zip-file-name-display">
+                Click or Drag & Drop your .ZIP file here
+              </div>
+              <p class="text-[11px] text-slate-400">Only <b>.zip</b> files accepted (bundle code, schematics, and simulation)</p>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Submission Notes</label>
+          <textarea id="zip-notes" rows="2" placeholder="e.g. Completed all test cases. Included project README inside zip." class="w-full text-xs px-3 py-2 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-amber-500 focus:outline-none"></textarea>
+        </div>
+
+        <div class="pt-4 border-t border-slate-200 dark:border-slate-800 flex items-center justify-end gap-3">
+          <button type="button" class="modal-close-btn px-4 py-2 text-xs font-semibold rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">Cancel</button>
+          <button type="submit" class="px-5 py-2 text-xs font-semibold rounded-lg bg-amber-600 hover:bg-amber-500 text-white shadow-md flex items-center gap-1.5">
+            <i data-lucide="send" class="w-4 h-4"></i>
+            <span>Submit</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+
+  <!-- 6. ACTIVE TODAY MODAL (Interns Working & Logged In Today) -->
+  <div id="modal-active-today" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm hidden flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white dark:bg-slate-900 rounded-2xl max-w-xl w-full border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden my-8 max-h-[90vh] flex flex-col">
+      <div class="px-6 py-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between bg-emerald-50/50 dark:bg-emerald-950/20">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
+            <i data-lucide="user-check" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h3 class="text-base font-bold text-slate-900 dark:text-white">Active Interns Today</h3>
+              <span id="active-today-badge-count" class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-900/60 dark:text-emerald-300">0 Active</span>
+            </div>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Interns who logged into Tarcin Interns and are working today</p>
+          </div>
+        </div>
+        <button class="modal-close-btn p-1.5 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <div class="p-6 overflow-y-auto space-y-4 flex-1">
+        <div id="active-today-list" class="space-y-3">
+          <!-- Populated dynamically via JS -->
+        </div>
+      </div>
+
+      <div class="p-4 border-t border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/30 flex items-center justify-between">
+        <span class="text-xs text-slate-400">Live attendance & daily work tracker</span>
+        <div class="flex items-center gap-2">
+          <button type="button" onclick="ui.filterToActiveToday()" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-emerald-600 hover:bg-emerald-500 text-white shadow-sm flex items-center gap-1.5">
+            <i data-lucide="filter" class="w-3.5 h-3.5"></i> Filter Main Roster
+          </button>
+          <button type="button" class="modal-close-btn px-4 py-1.5 text-xs font-semibold rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. Intern 360 Detail Drawer (Showing Full Profile, Credentials & Uploaded ZIPs) -->
+  <div id="modal-intern-detail" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-900 rounded-2xl max-w-2xl w-full border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden my-auto max-h-[92vh] flex flex-col">
+      
+      <div class="relative bg-gradient-to-r from-slate-950 via-slate-900 to-cyan-950 p-6 text-white border-b border-cyan-900/40">
+        <button type="button" class="modal-close-btn absolute top-4 right-4 p-2 rounded-xl bg-white/10 hover:bg-white/20 text-white transition-colors flex items-center justify-center shadow-sm" title="Close" aria-label="Close modal">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+        <div class="flex items-center gap-4">
+          <div id="detail-avatar" class="w-16 h-16 rounded-2xl bg-cyan-600/30 backdrop-blur-md border border-cyan-400/30 text-white flex items-center justify-center text-2xl font-black shadow-lg">
+            --
+          </div>
+          <div>
+            <div class="flex items-center gap-2.5">
+              <h2 id="detail-name" class="text-xl font-extrabold tracking-tight text-white">--</h2>
+              <span id="detail-status-pill" class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Active</span>
+            </div>
+            <p id="detail-domain" class="text-sm text-cyan-300 font-semibold mt-0.5">Embedded C / ESP32 IoT</p>
+            <p id="detail-college" class="text-xs text-slate-300 mt-0.5 flex items-center gap-1.5 font-medium">
+              <i data-lucide="graduation-cap" class="w-3.5 h-3.5 text-cyan-400"></i>
+              <span>College</span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="px-6 py-3 bg-slate-50 dark:bg-slate-800/60 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between flex-wrap gap-2 text-xs">
+        <div class="flex items-center gap-2.5 text-slate-600 dark:text-slate-400">
+          <span id="detail-department-badge" class="px-2.5 py-1 rounded-lg bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-200 font-semibold flex items-center gap-1">
+            <i data-lucide="book-open" class="w-3.5 h-3.5 text-cyan-600"></i> <span>Dept: --</span>
+          </span>
+          <span id="detail-year-badge" class="px-2.5 py-1 rounded-lg bg-cyan-100 dark:bg-cyan-950 text-cyan-800 dark:text-cyan-300 font-semibold flex items-center gap-1 border border-cyan-200 dark:border-cyan-800">
+            <i data-lucide="calendar" class="w-3.5 h-3.5 text-cyan-600"></i> <span>Year: --</span>
+          </span>
+          <span id="detail-last-login" class="text-[11px] text-emerald-600 dark:text-emerald-400 font-semibold flex items-center gap-1 font-mono">
+            <i data-lucide="activity" class="w-3.5 h-3.5"></i> <span>Logged in Today</span>
+          </span>
+        </div>
+        <div class="flex items-center gap-2">
+          <button id="btn-detail-add-task" class="px-3 py-1.5 rounded-lg bg-cyan-600 text-white font-medium hover:bg-cyan-500 transition-colors flex items-center gap-1">
+            <i data-lucide="plus" class="w-3.5 h-3.5"></i> Assign Work
+          </button>
+          <button id="btn-detail-edit" class="px-3 py-1.5 rounded-lg bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 font-medium hover:bg-slate-300 dark:hover:bg-slate-600 transition-colors flex items-center gap-1">
+            <i data-lucide="edit-3" class="w-3.5 h-3.5"></i> Edit Intern
+          </button>
+        </div>
+      </div>
+
+      <div class="p-6 overflow-y-auto space-y-6 flex-1">
+        
+        <!-- Intern Credential Card (Palani can view/copy to share with intern) -->
+        <div class="p-4 bg-cyan-50/70 dark:bg-cyan-950/40 rounded-xl border border-cyan-200 dark:border-cyan-900/60 flex items-center justify-between flex-wrap gap-3">
+          <div>
+            <div class="text-xs font-bold text-cyan-900 dark:text-cyan-300 flex items-center gap-1.5">
+              <i data-lucide="key" class="w-4 h-4 text-cyan-600"></i> Tarcin Interns Login Credentials
+            </div>
+            <div class="mt-1.5 text-xs text-slate-700 dark:text-slate-300 space-x-3">
+              <span>Login ID: <strong id="detail-cred-username" class="font-mono text-cyan-700 dark:text-cyan-400 font-bold bg-cyan-100/70 dark:bg-cyan-900/50 px-2 py-0.5 rounded">--</strong></span>
+              <span>&bull;</span>
+              <span>Password: <strong id="detail-cred-password" class="font-mono text-slate-900 dark:text-slate-100 font-bold bg-slate-200/80 dark:bg-slate-800 px-2 py-0.5 rounded">--</strong></span>
+            </div>
+          </div>
+          <button type="button" onclick="ui.copyInternCredentials()" class="px-3.5 py-1.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 flex items-center gap-1.5 shadow-sm">
+            <i data-lucide="copy" class="w-3.5 h-3.5 text-cyan-600"></i> Copy Login Details
+          </button>
+        </div>
+
+        <!-- Stats breakdown -->
+        <div class="grid grid-cols-4 gap-2">
+          <div class="bg-slate-50 dark:bg-slate-800/50 p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 text-center">
+            <span class="text-[10px] font-bold text-slate-400 uppercase">Tasks Done</span>
+            <p id="detail-tasks-done" class="text-lg font-bold text-cyan-600 dark:text-cyan-400 mt-1">0</p>
+          </div>
+          <div class="bg-slate-50 dark:bg-slate-800/50 p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 text-center">
+            <span class="text-[10px] font-bold text-slate-400 uppercase">Assessments</span>
+            <p id="detail-assessments-done" class="text-lg font-bold text-emerald-600 dark:text-emerald-400 mt-1">0</p>
+          </div>
+          <div class="bg-slate-50 dark:bg-slate-800/50 p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 text-center">
+            <span class="text-[10px] font-bold text-slate-400 uppercase">Bugs Solved</span>
+            <p id="detail-bugs-solved" class="text-lg font-bold text-rose-600 dark:text-rose-400 mt-1">0</p>
+          </div>
+          <div class="bg-slate-50 dark:bg-slate-800/50 p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 text-center">
+            <span class="text-[10px] font-bold text-slate-400 uppercase">ZIP Files</span>
+            <p id="detail-zips-submitted" class="text-lg font-bold text-amber-600 dark:text-amber-400 mt-1">0</p>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200 flex items-center gap-1.5 mb-3">
+            <i data-lucide="list-checks" class="w-4 h-4 text-cyan-500"></i> Assigned Works
+          </h4>
+          <div id="detail-tasks-list" class="space-y-2"></div>
+        </div>
+
+        <div>
+          <h4 class="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200 flex items-center gap-1.5 mb-3">
+            <i data-lucide="file-archive" class="w-4 h-4 text-amber-500"></i> Uploaded ZIP Deliverables
+          </h4>
+          <div id="detail-submissions-list" class="space-y-2"></div>
+        </div>
+
+        <div>
+          <h4 class="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200 flex items-center gap-1.5 mb-3">
+            <i data-lucide="history" class="w-4 h-4 text-cyan-500"></i> Standup History
+          </h4>
+          <div id="detail-logs-list" class="space-y-2"></div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Modal: + Add ZIP File to File Dashboard -->
+  <div id="modal-add-zip-file" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm hidden flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white dark:bg-slate-900 rounded-2xl max-w-lg w-full border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden my-8 animate-in fade-in zoom-in-95 duration-150">
+      <div class="px-6 py-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between bg-slate-50/50 dark:bg-slate-800/40">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
+            <i data-lucide="folder-archive" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="text-base font-bold text-slate-900 dark:text-white">+ Add ZIP File</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Store and assign project ZIP archives to interns</p>
+          </div>
+        </div>
+        <button onclick="ui.closeAllModals()" class="p-1 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <form id="form-add-file-zip" class="p-6 space-y-4">
+        <!-- ZIP File Input -->
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
+            Select Project File (<span class="text-indigo-600 dark:text-indigo-400 font-bold">.ZIP archive only</span>) <span class="text-rose-500">*</span>
+          </label>
+          <div class="relative border-2 border-dashed border-indigo-300 dark:border-indigo-700/60 rounded-xl p-4 text-center hover:bg-indigo-50/40 dark:hover:bg-indigo-950/30 transition-colors">
+            <input 
+              type="file" 
+              id="file-zip-input" 
+              required 
+              accept=".zip,application/zip,application/x-zip-compressed" 
+              class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+            />
+            <div class="flex flex-col items-center justify-center gap-1.5 pointer-events-none">
+              <i data-lucide="file-archive" class="w-7 h-7 text-indigo-600 dark:text-indigo-400"></i>
+              <span id="file-zip-selected-label" class="text-xs font-semibold text-slate-700 dark:text-slate-300">
+                Click to browse or drag & drop .ZIP file
+              </span>
+              <span class="text-[10px] text-slate-400">Supported format: .zip (Max 50MB)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Description -->
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+            Description / Work Instructions <span class="text-rose-500">*</span>
+          </label>
+          <textarea 
+            id="file-zip-description" 
+            rows="2" 
+            required 
+            placeholder="e.g. Project source files, STM32 firmware template, pinout diagrams and assignment requirements..." 
+            class="w-full text-xs px-3 py-2 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          ></textarea>
+        </div>
+
+        <!-- Related Task / Work -->
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+            Related Task / Work Topic
+          </label>
+          <select 
+            id="file-zip-task-select" 
+            class="w-full text-xs px-3 py-2 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          >
+            <option value="">General Project Resource / Starter Kit</option>
+          </select>
+        </div>
+
+        <!-- Assigned Intern -->
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+            Assign to Intern
+          </label>
+          <select 
+            id="file-zip-intern-select" 
+            class="w-full text-xs px-3 py-2 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          >
+            <option value="all">All Interns (Shared Resource)</option>
+          </select>
+        </div>
+
+        <div class="pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-end gap-2">
+          <button 
+            type="button" 
+            onclick="ui.closeAllModals()" 
+            class="px-4 py-2 text-xs font-semibold rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
+          >
+            Cancel
+          </button>
+          <button 
+            type="submit" 
+            id="btn-submit-add-file-zip" 
+            class="px-4 py-2 text-xs font-bold rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white flex items-center gap-1.5 shadow-md active:scale-95"
+          >
+            <i data-lucide="upload" class="w-3.5 h-3.5"></i>
+            <span>Upload ZIP File</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Production Config & Main JavaScript App -->
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,119 @@
+/* Custom Styles for Palani Interns Work flow */
+
+/* Smooth custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(156, 163, 175, 0.4);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(107, 114, 128, 0.6);
+}
+
+/* Tab active state styles */
+.active-tab {
+  background-color: white !important;
+  color: #4f46e5 !important;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+}
+.dark .active-tab {
+  background-color: #1e293b !important;
+  color: #a5b4fc !important;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+}
+
+/* Kanban Drag & Drop Visuals */
+.kanban-dropzone {
+  min-height: 200px;
+  transition: all 0.2s ease-in-out;
+}
+.kanban-dropzone.drag-over {
+  background-color: rgba(99, 102, 241, 0.08);
+  border: 2px dashed #6366f1;
+  border-radius: 0.75rem;
+}
+
+.kanban-card {
+  cursor: grab;
+  user-select: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.kanban-card:active {
+  cursor: grabbing;
+}
+.kanban-card.is-dragging {
+  opacity: 0.4;
+  transform: scale(0.98);
+}
+
+/* Subtle card hover animation */
+.intern-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.intern-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.06), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+}
+.dark .intern-card:hover {
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.35);
+}
+
+.stat-card {
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+.stat-card:hover {
+  transform: translateY(-1px);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.tab-pane:not(.hidden) {
+  animation: fadeIn 0.25s ease-out forwards;
+}
+
+/* Custom avatar gradients */
+.avatar-gradient-1 { background: linear-gradient(135deg, #6366f1, #a855f7); }
+.avatar-gradient-2 { background: linear-gradient(135deg, #3b82f6, #06b6d4); }
+.avatar-gradient-3 { background: linear-gradient(135deg, #10b981, #059669); }
+.avatar-gradient-4 { background: linear-gradient(135deg, #f59e0b, #ef4444); }
+.avatar-gradient-5 { background: linear-gradient(135deg, #ec4899, #8b5cf6); }
+.avatar-gradient-6 { background: linear-gradient(135deg, #0284c7, #2563eb); }
+
+/* Intern View-Only Mode on Guide Dashboard */
+#view-supervisor.intern-view-only .intern-card button,
+#view-supervisor.intern-view-only table td button,
+#view-supervisor.intern-view-only [onclick*="openDetailModal"],
+#view-supervisor.intern-view-only [onclick*="openTaskModal"],
+#view-supervisor.intern-view-only [onclick*="openInternModal"],
+#view-supervisor.intern-view-only [onclick*="confirmDeleteIntern"],
+#view-supervisor.intern-view-only [onclick*="openUploadZipModal"],
+#view-supervisor.intern-view-only [onclick*="openBugModal"],
+#view-supervisor.intern-view-only [onclick*="downloadSubmissionZip"],
+#view-supervisor.intern-view-only [onclick*="openActiveTodayModal"],
+#view-supervisor.intern-view-only [onclick*="openCompletedTasksModal"] {
+  pointer-events: none !important;
+  cursor: default !important;
+}
+
+#view-supervisor.intern-view-only .intern-card button,
+#view-supervisor.intern-view-only table td button {
+  opacity: 0.55 !important;
+}
+
+#view-supervisor.intern-view-only h4[onclick*="openDetailModal"],
+#view-supervisor.intern-view-only span[onclick*="openDetailModal"],
+#view-supervisor.intern-view-only td[onclick*="openDetailModal"],
+#view-supervisor.intern-view-only div[onclick*="openDetailModal"] {
+  cursor: default !important;
+  color: inherit !important;
+}

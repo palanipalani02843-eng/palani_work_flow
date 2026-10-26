@@ -1,0 +1,29 @@
+{
+  "name": "tarcin-interns-workflow-server",
+  "version": "2.0.0",
+  "description": "Central Backend for Palani Interns Workflow - Tarcin Robotics LLP",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.49.1",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^1.4.5-lts.1",
+    "pg": "^8.13.1"
+  },
+  "keywords": [
+    "embedded",
+    "iot",
+    "workflow",
+    "intern-management",
+    "supabase"
+  ],
+  "author": "Palani Pandi C (Tarcin Robotics LLP)",
+  "license": "MIT"
+}
